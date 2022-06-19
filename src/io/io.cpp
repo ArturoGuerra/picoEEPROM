@@ -7,10 +7,9 @@
 #define ADDRESSBUS_BASE_PIN 10
 #define ADDRESSBUS_LEN 19
 
-#define ADDRESSBUS_MASK 0x1FFFF
-//#define ADDRESSBUS_LEFT_MASK 0x6000
-#define ADDRESSBUS_LEFT_MASK 0xE000
-#define ADDRESSBUS_LEFT_OFFSET 3
+#define ADDRESSBUS_RMASK 0x1FFF
+#define ADDRESSBUS_LMASK 0xE000
+#define ADDRESSBUS_LSHIFT 3
 
 static inline void io_init(PIO pio, int sm, uint offset);
 
@@ -23,9 +22,9 @@ IO::IO(PIO pio, int sm) {
 }
 
 addrbus_t IO::address() {
-    uint32_t value = pio_sm_get_blocking(this->pio, this->sm);
-    //return value;
-    return (value & ADDRESSBUS_MASK) | ((value >> ADDRESSBUS_LEFT_OFFSET) & ADDRESSBUS_LEFT_MASK);
+    uint32_t pins = pio_sm_get_blocking(this->pio, this->sm);
+    //return pins;
+    return ((pins >> ADDRESSBUS_LSHIFT) & ADDRESSBUS_LMASK) | (pins & ADDRESSBUS_RMASK);
 }
 
 void IO::wdata(databus_t data) {
