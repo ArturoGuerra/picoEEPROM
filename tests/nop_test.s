@@ -1,4 +1,5 @@
-.org 0xF000
+    .org 0x8000
+    .org 0xF000
 start:
     nop
     nop
@@ -10,6 +11,6 @@ start:
     nop
     nop
 
-.org 0x7FFC
-.word start
-.word start
+    .org 0xFFFC
+    .word start
+    .word start
