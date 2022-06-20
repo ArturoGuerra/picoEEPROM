@@ -1,0 +1,1 @@
+arm-none-eabi-objcopy -I binary -O elf32-littlearm $1 $2

@@ -8,6 +8,16 @@ set(CMAKE_CXX_STANDARD 17)
 
 pico_sdk_init()
 
+# Creates ROM object file from ROM binary
+add_custom_command(
+    OUTPUT "${PROJECT_BINARY_DIR}/rom.obj"
+    COMMAND bash "${PROJECT_SOURCE_DIR}/scripts/generate_rom_header.sh" "rom.bin" "${PROJECT_BINARY_DIR}/rom.obj"
+    WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+)
+
+add_custom_target(rom_header ALL DEPENDS "${PROJECT_BINARY_DIR}/rom.obj")
+
+# Adds EEPROM Emulator to the project
 add_library(eeprom STATIC
     ${PROJECT_SOURCE_DIR}/src/eeprom/eeprom.cpp
 )
@@ -16,6 +26,12 @@ target_include_directories(eeprom PUBLIC
     ${PROJECT_SOURCE_DIR}/include
 )
 
+target_link_libraries(eeprom PRIVATE
+    ${PROJECT_BINARY_DIR}/rom.obj
+)
+
+
+# Adds I/O wrapper to the project
 add_library(io STATIC
     ${PROJECT_SOURCE_DIR}/src/io/io.cpp
 )

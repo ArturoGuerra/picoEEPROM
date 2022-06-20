@@ -40,3 +40,8 @@ Makefile
 
 # VSCode
 .vscode/*
+
+
+# ROM Files
+*.rom
+*.rom.h
