@@ -43,5 +43,6 @@ Makefile
 
 
 # ROM Files
+*.bin
 *.rom
 *.rom.h
