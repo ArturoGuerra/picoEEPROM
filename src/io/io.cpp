@@ -8,7 +8,7 @@
 #define ADDRESSBUS_LEN 19
 
 #define ADDRESSBUS_RMASK 0x1FFF
-#define ADDRESSBUS_LMASK 0xE000
+#define ADDRESSBUS_LMASK 0x6000
 #define ADDRESSBUS_LSHIFT 3
 
 static inline void io_init(PIO pio, int sm, uint offset);

@@ -1,14 +1,20 @@
 .program bus
 
-public entry_point:
 idle:
-    set pins, 0 ; Sets address lines to 0 allowing for other devices to use the data bus
-
-.wrap_target
-    wait 0 pin 18 
-    in pins, 19
+    set pins, 0
+    
+wdata:
     push
     pull
-    out pins, 8 [2]
-    jmp pin idle ; Waits for the next value address on the address bus
+    out pins, 8
+    mov y, x
+    
+
+.wrap_target
+public entry_point:
+    wait 0 pin 18
+    mov isr, null
+    in pins, 19
+    mov x, isr
+    jmp x!=y wdata ; only push ISR if it is not the same as the current address
 .wrap

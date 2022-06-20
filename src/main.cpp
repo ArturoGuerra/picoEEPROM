@@ -37,15 +37,15 @@ int main() {
 
     IO io = IO(pio, sm);
     
-    addrbus_t oldaddr = 0xFFFF;
+    //addrbus_t oldaddr = 0xFFFF;
 
     while(true) {
         addrbus_t address = io.address();
         data_t data = eeprom.read(address);        
         io.wdata(data);
-        if (address != oldaddr) {
-            printf("A: 0x%04X D: 0x%02X\n", address, data);
-            oldaddr = address; 
-        }
+        printf("A: 0x%04X D: 0x%02X\n", address, data);
+        //if (address != oldaddr) {
+        //    oldaddr = address; 
+       // }
     }
 }
