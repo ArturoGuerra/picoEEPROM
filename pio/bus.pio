@@ -1,20 +1,20 @@
 .program bus
 
-idle:
-    set pins, 0
-    
 wdata:
     push
     pull
     out pins, 8
     mov y, x
+    jmp entry_point
     
+idle:
+    set pins, 0
 
 .wrap_target
 public entry_point:
-    wait 0 pin 18
+    jmp pin idle ; jump to idle state if CE is high (active low) (2 Cycles)
     mov isr, null
     in pins, 19
     mov x, isr
-    jmp x!=y wdata ; only push ISR if it is not the same as the current address
+    jmp x!=y wdata ; Pushes data to FIFO and outputs data to bus 
 .wrap
